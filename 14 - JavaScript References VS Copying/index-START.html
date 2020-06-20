@@ -8,15 +8,33 @@
 
   <script>
     // start with strings, numbers and booleans
+    let age = 100;
+    let age2 = age;
+    console.log(age,'--', age2);
 
+    age = 200;
+    console.log(age,'--', age2);
+
+    let name = 'Ryan'
+    let name2 = name
+
+    console.log(name,'--', name2);
+
+    name = 'Ryan Camp'
+    console.log(name,'--', name2);
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
     // and we want to make a copy of it.
+    const team = players
+
+    console.log(team, players)
 
     // You might think we can just do something like this:
+    team[3] = 'Lux';
 
     // however what happens when we update that array?
+    console.log(team, players)
 
     // now here is the problem!
 
@@ -26,13 +44,22 @@
 
     // So, how do we fix this? We take a copy instead!
 
+
     // one way
+    const team2 = players.slice();
+    team2[3] = 'Team2';
 
     // or create a new array and concat the old one in
+    const team3 = [].concat(players);
+    team3[3] = 'Team3';
 
     // or use the new ES6 Spread
-
+    const team4 = [...players];
+    team4[3] = 'Team4';
     // now when we update it, the original one isn't changed
+    console.log(team2, players); //players should still have 'Lux'
+    console.log(team3, players); //players should still have 'Lux'
+    console.log(team4, players); //players should still have 'Lux'
 
     // The same thing goes for objects, let's say we have a person object
 
@@ -43,12 +70,63 @@
     };
 
     // and think we make a copy:
+    const captain = person;
+    captain.number = 99;
+
+    console.log(captain, person); //this also changed person object because it is a Reference
 
     // how do we take a copy instead?
+    const cap2 = Object.assign({}, person);
+    cap2.number = 200;
+
+    console.log(cap2, person); //we see that it did not change the person object.
 
     // We will hopefully soon see the object ...spread
+    const cap3 = {...person};
+    cap3.number = 300;
 
+    console.log(cap3, person);// we see this also does not change the person object.
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+
+    const ryan = {
+      name: 'ryan',
+      age: 32,
+      likes: {
+        facebook: false,
+        twitter: true,
+        instagram: true,
+      },
+    };
+
+    console.clear();
+    console.log(ryan);
+
+    const copyRyan = Object.assign({}, ryan);
+    console.log(copyRyan);
+
+    copyRyan.name = 'Ryan Camp';
+    console.log(copyRyan, ryan) // does not change original;
+
+    copyRyan.likes.twitter = false;
+    console.log(copyRyan.likes, ryan.likes); //does change original, copy only goes one level deep.
+
+    // check spread clone.
+    const richard = {
+      name: 'richard',
+      age: 32,
+      likes: {
+        facebook: false,
+        twitter: true,
+        instagram: true,
+      },
+    };
+
+    const spreadClone = {...richard};
+
+    spreadClone.likes.twitter = false;
+    console.log(spreadClone.likes, richard.likes);
+
+
 
   </script>
 
